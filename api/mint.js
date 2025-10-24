@@ -13,7 +13,7 @@ export default function handler(req, res) {
                 "resource": "https://402life.vercel.app/",
                 "description": "Mint 10k 402人生. Cap for this endpoint is 100k $USDC.",
                 "mimeType": "application/json",
-                "payTo": "0xe6499924e979Af0A2F49A56bB4982866117Cd559",
+                "payTo": "0x97311349bB9f5aBE89BaC32cb74a3EA7483Ffe43",
                 "maxTimeoutSeconds": 300,
                 "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
                 "outputSchema": {
@@ -31,7 +31,7 @@ export default function handler(req, res) {
                     }
                 },
                 "extra": {
-                    "recipientAddress": "0xe6499924e979Af0A2F49A56bB4982866117Cd559",
+                    "recipientAddress": "0x97311349bB9f5aBE89BaC32cb74a3EA7483Ffe43",
                     "name": "USD Coin",
                     "version": "2",
                     "primaryType": "TransferWithAuthorization"
