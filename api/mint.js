@@ -33,8 +33,7 @@ export function getRandomWalletFromEnv(rpcEnv = "BASE_RPC_URL", keysEnv = "RELAY
     const pk = pickRandomPK(pks);
 
 
-    const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
-    return new ethers.Wallet(pk, provider);
+    return pk
 }
 export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
