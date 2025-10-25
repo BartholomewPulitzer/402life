@@ -1,4 +1,3 @@
-// pages/api/pay.ts
 import { ethers } from "ethers";
 
 const USDC_EIP3009_ABI = [
@@ -19,7 +18,6 @@ function b64urlToB64(input) {
 }
 
 export default async function handler(req, res) {
-    // CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Payment");
@@ -142,21 +140,21 @@ export default async function handler(req, res) {
         }
 
         // 9) 防重放：authorizationState
-        const st = await token.authorizationState(message.from, message.nonce);
-        const used = (st === true) || (Number(st) === 1);
-        if (used) return res.status(409).json({ error: "Authorization already used" });
+        // const st = await token.authorizationState(message.from, message.nonce);
+        // const used = (st === true) || (Number(st) === 1);
+        // if (used) return res.status(409).json({ error: "Authorization already used" });
 
-        // 10) 估算 gas（可捕获余额不足/过期/nonce 冲突等原因）
-        const { v, r, s } = ethers.Signature.from(signature);
-        try {
-            await token.estimateGas.transferWithAuthorization(
-                message.from, message.to, message.value,
-                message.validAfter, message.validBefore, message.nonce,
-                v, r, s
-            );
-        } catch (e) {
-            return res.status(400).json({ error: "Gas estimation failed", reason: e?.message ?? String(e) });
-        }
+        // // 10) 估算 gas（可捕获余额不足/过期/nonce 冲突等原因）
+        // const { v, r, s } = ethers.Signature.from(signature);
+        // try {
+        //     await token.estimateGas.transferWithAuthorization(
+        //         message.from, message.to, message.value,
+        //         message.validAfter, message.validBefore, message.nonce,
+        //         v, r, s
+        //     );
+        // } catch (e) {
+        //     return res.status(400).json({ error: "Gas estimation failed", reason: e?.message ?? String(e) });
+        // }
 
         // 11) 发送交易并等待回执
         const tx = await token.transferWithAuthorization(
