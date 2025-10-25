@@ -55,7 +55,7 @@ export default async function handler(req, res) {
                     scheme: "exact",
                     network: "base",
                     maxAmountRequired: "1000000000",
-                    resource: "https://402life.vercel.app/",
+                    resource: "https://402life.fun/",
                     description: "Mint 100k 402人生. Cap for this endpoint is 100k $USDC.",
                     mimeType: "application/json",
                     payTo: "0x0aE4829C69d2aC57fB04597308836DfbA79a4CdF",
