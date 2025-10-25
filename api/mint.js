@@ -58,7 +58,7 @@ export default async function handler(req, res) {
                     resource: "https://402life.vercel.app/",
                     description: "Mint 10k 402人生. Cap for this endpoint is 100k $USDC.",
                     mimeType: "application/json",
-                    payTo: "0x97311349bB9f5aBE89BaC32cb74a3EA7483Ffe43",
+                    payTo: "0x0aE4829C69d2aC57fB04597308836DfbA79a4CdF",
                     maxTimeoutSeconds: 300,
                     asset: USDC_ADDRESS,
                     outputSchema: {
@@ -76,7 +76,7 @@ export default async function handler(req, res) {
                         }
                     },
                     extra: {
-                        recipientAddress: "0x97311349bB9f5aBE89BaC32cb74a3EA7483Ffe43",
+                        recipientAddress: "0x0aE4829C69d2aC57fB04597308836DfbA79a4CdF",
                         name: "USD Coin",
                         version: "2",
                         primaryType: "TransferWithAuthorization"
