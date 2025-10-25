@@ -2,7 +2,13 @@ export default function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
     if (req.method === "OPTIONS") return res.status(200).end();
-
+    const hasPaymentHeader = Object.keys(req.headers).some(
+        key => key.toLowerCase() === "x-payment"
+    );
+    
+    if (hasPaymentHeader) {
+       return res.status(200).json({ ok: true, message: "Payment header detected" });
+    }
     return res.status(402).json({
         "error": "Payment required to access this resource",
         "accepts": [
