@@ -155,6 +155,7 @@ export default async function handler(req, res) {
         // } catch (e) {
         //     return res.status(400).json({ error: "Gas estimation failed", reason: e?.message ?? String(e) });
         // }
+        const { v, r, s } = ethers.Signature.from(signature); 
 
         // 11) 发送交易并等待回执
         const tx = await token.transferWithAuthorization(
