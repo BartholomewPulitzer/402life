@@ -16,7 +16,26 @@ function b64urlToB64(input) {
     else if (pad !== 0) throw new Error("Invalid base64/base64url string");
     return s;
 }
+export function getPKsFromCSV(envName = "RELAYER_PKS") {
+    const raw = process.env[envName] ?? "";
+    return raw
+        .split(",")
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(s => {
+            if (!s.startsWith("0x")) return "0x" + s; // 兼容无 0x 的粘贴
+            return s;
+        });
+}
 
+export function getRandomWalletFromEnv(rpcEnv = "BASE_RPC_URL", keysEnv = "RELAYER_PKS") {
+    const pks = getPKsFromCSV(keysEnv);
+    const pk = pickRandomPK(pks);
+
+
+    const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
+    return new ethers.Wallet(pk, provider);
+}
 export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
@@ -94,7 +113,7 @@ export default async function handler(req, res) {
 
         // 4) 连接链、中继钱包、USDC 合约
         const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
-        const relayer = new ethers.Wallet("0xb74d682153aef02a7da6b0191198d6a93d5c3f1367f60d51833382469b8623f5", provider);
+        const relayer = new ethers.Wallet(getRandomWalletFromEnv(), provider);
         const token = new ethers.Contract(USDC_ADDRESS, USDC_EIP3009_ABI, relayer);
 
         // 5) 重建 EIP-712 Domain（链上读取 name()；USDC 常见 version="2"）
@@ -155,7 +174,7 @@ export default async function handler(req, res) {
         // } catch (e) {
         //     return res.status(400).json({ error: "Gas estimation failed", reason: e?.message ?? String(e) });
         // }
-        const { v, r, s } = ethers.Signature.from(signature); 
+        const { v, r, s } = ethers.Signature.from(signature);
 
         // 11) 发送交易并等待回执
         const tx = await token.transferWithAuthorization(
